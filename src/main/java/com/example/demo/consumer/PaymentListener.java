@@ -23,7 +23,7 @@ public class PaymentListener {
 
     @KafkaListener(topics = "payments-topic", groupId = "payments-group")
     public void receive(AccountRequestDTO data){
-        System.out.println(">>> Kafka Recebeu" + data.ownerName());
+        System.out.println(">>> Kafka Recebeu " + data.ownerName());
 
         Account entity = new Account();
         entity.setOwnerName(data.ownerName());
