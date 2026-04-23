@@ -1,27 +1,29 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @Entity
+@Table(name = "accounts")
 @NoArgsConstructor
 @AllArgsConstructor
 
 public class Account {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String ownerName; //Nome do dono da conta
     private BigDecimal balance; //saldo
+    private String Tel;
+    private String Adress;
 
 }
