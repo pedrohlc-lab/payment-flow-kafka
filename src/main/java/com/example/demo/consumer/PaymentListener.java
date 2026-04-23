@@ -27,7 +27,7 @@ public class PaymentListener {
 
         Account entity = new Account();
         entity.setOwnerName(data.ownerName());
-        entity.setAdress(data.Adress());
+        entity.setAddress(data.Adress());
         entity.setTel(data.Tel());
 
         repository.save(entity);

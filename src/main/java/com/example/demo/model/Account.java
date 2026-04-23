@@ -28,13 +28,12 @@ public class Account {
     private String tel;
     private String address;
 
-    public boolean deposit(BigDecimal amount){
+    public void deposit(BigDecimal amount){
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0){
             throw new IllegalArgumentException("Value should be positive");
         }
         this.balance = this.balance.add(amount);
         System.out.println("Valor" + amount.toString() + "depositado com sucesso");
-        return true;
     }
 
     public boolean withdraw(BigDecimal amount){
