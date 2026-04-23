@@ -7,8 +7,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update # Isso vai criar as tabelas automaticamente para nós
-    show-sql: true # Veremos as transações no console
+      ddl-auto: update
+    show-sql: true
 
   kafka:
     bootstrap-servers: localhost:9092
