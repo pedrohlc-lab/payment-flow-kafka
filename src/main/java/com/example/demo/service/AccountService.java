@@ -6,13 +6,10 @@ import com.example.demo.model.Account;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import com.example.demo.repository.AccountRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import static tools.jackson.databind.ext.javatime.util.DecimalUtils.toBigDecimal;
 
 
 @Service
@@ -30,7 +27,7 @@ public class AccountService {
 
         Account savedAccount = repository.save(account);
 
-        return new AccountResponseDTO(account.getId(), account.getOwnerName(), account.getBalance(), account.getTel(), account.getAdress());
+        return new AccountResponseDTO(account.getId(), account.getOwnerName(), account.getBalance(), account.getTel(), account.getAddress());
     }
 
     //DELETE
@@ -48,10 +45,10 @@ public class AccountService {
 
         account.setOwnerName(updateRequest.ownerName());
         account.setTel(updateRequest.Tel());
-        account.setAdress(updateRequest.Adress());
+        account.setAddress(updateRequest.Adress());
 
 
-        return new AccountResponseDTO(account.getId(), account.getOwnerName(), account.getBalance(), account.getTel(), account.getAdress());
+        return new AccountResponseDTO(account.getId(), account.getOwnerName(), account.getBalance(), account.getTel(), account.getAddress());
     }
 
 
@@ -68,7 +65,7 @@ public class AccountService {
                     acc.getOwnerName(),
                     acc.getBalance(),
                     acc.getTel(),
-                    acc.getAdress()
+                    acc.getAddress()
             );
             accountsResponse.add(dto);
         }
@@ -85,7 +82,7 @@ public class AccountService {
                 acc.getOwnerName(),
                 acc.getBalance(),
                 acc.getTel(),
-                acc.getAdress());
+                acc.getAddress());
 
     }
 
@@ -100,7 +97,7 @@ public class AccountService {
             throw new RuntimeException("Insufficient Balance");
         }
 
-        account.setBalance(newBalance);
+        account.deposit(newBalance);
         repository.save(account);
 
     }
