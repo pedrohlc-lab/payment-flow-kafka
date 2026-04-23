@@ -1,6 +1,7 @@
 package com.example.demo.consumer;
 
 
+import com.example.demo.dto.AccountOperationDTO;
 import com.example.demo.dto.AccountRequestDTO;
 import com.example.demo.model.Account;
 import com.example.demo.repository.AccountRepository;
@@ -22,16 +23,26 @@ public class PaymentListener {
     }
 
     @KafkaListener(topics = "payments-topic", groupId = "payments-group")
-    public void receive(AccountRequestDTO data){
-        System.out.println(">>> Kafka Recebeu " + data.ownerName());
 
-        Account entity = new Account();
-        entity.setOwnerName(data.ownerName());
-        entity.setAddress(data.Adress());
-        entity.setTel(data.Tel());
+    public void receive(AccountOperationDTO data){
+        Account account =  repository.findById(data.id())
+                .orElseThrow(() -> new RuntimeException("Account not found"));
 
-        repository.save(entity);
-        System.out.println(">>> Gravado no banco");
+        System.out.println(">>> Kafka Recebeu " + account.getOwnerName());
+
+        if("WITHDRAW".equalsIgnoreCase(data.operationType())){
+            account.withdraw(data.amount());
+        }else if ("DEPOSIT".equalsIgnoreCase(data.operationType())){
+            account.deposit(data.amount());
+        }else {
+            System.out.println(">>> Alerta: Operação desconhecida: " + data.operationType());
+            return;
+        }
+        repository.save(account);
+        System.out.println(">>> Salvo no banco");
+        }
+
+
     }
 
-}
+
